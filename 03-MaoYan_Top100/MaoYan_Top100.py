@@ -1,21 +1,23 @@
+'''
+FileName: 
+Author: YangSL
+Date: 2020-10-30 16:19:24
+LastEditTime: 2020-10-30 17:07:25
+Description: 
+'''
 # -*- coding:utf-8 -*-
-"""
-Updated at 14:33 on March 11,2019
-@title: Spider Maoyan Top100
-@author: Northxw
-"""
 
 import requests
 import re
 import json
 from requests.exceptions import RequestException
-from pymongo import MongoClient
+# from pymongo import MongoClient
 import time
 
 # 创建数据库连接
-client = MongoClient('mongodb://localhost:27017/')
-db = client.maoyan
-collection = db.rank
+# client = MongoClient('mongodb://localhost:27017/')
+# db = client.maoyan
+# collection = db.rank
 
 def get_one_page(url):
     """
@@ -66,16 +68,17 @@ def save_to_mongo(item):
     :param dict: 字典类型的数据
     :return: None
     """
-    collection.insert(item)
+    # collection.insert(item)
 
 def main(offset):
     url = 'http://maoyan.com/board/4?offset={}'.format(str(offset))
     html = get_one_page(url)
     for item in parse_one_page(html):
         write_to_file(item)
-        save_to_mongo(item)
+        # save_to_mongo(item)
 
 if __name__ == '__main__':
     for i in range(10):
         main(offset=i*10)
+        print(i)
         time.sleep(1)
